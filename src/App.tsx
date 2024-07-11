@@ -4,6 +4,7 @@ import Home from './pages/home/Home'
 import List from './pages/list/List'
 import Single from './pages/single/Single'
 import Profile from './pages/profile/Profile'
+import ProfileUpdate from './pages/profileUpdate/ProfileUpdate'
 
 function App() {  
   const router = createBrowserRouter([
@@ -26,6 +27,10 @@ function App() {
         {
           path:'/profile',
           element:<Profile/>
+        },
+        {
+          path:'/profile/update',
+          element:<ProfileUpdate/>
         }
       ]
     }
