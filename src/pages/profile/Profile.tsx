@@ -1,4 +1,5 @@
 import Cards from '../../components/cards/Cards'
+import Chat from '../../components/chat/Chat'
 import './profile.scss'
 
 export default function Profile() {
@@ -38,7 +39,7 @@ export default function Profile() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          {/* <Chat/> */}
+          <Chat/>
         </div>
       </div>
     </div>
