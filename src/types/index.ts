@@ -9,3 +9,10 @@ export interface Item {
   latitude: number
   longitude: number
 }
+
+export interface AuthUser {
+  id?: number
+  username?: string
+  email: string
+  avatar: string
+}
