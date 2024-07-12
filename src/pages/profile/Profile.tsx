@@ -1,9 +1,26 @@
-import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Cards from '../../components/cards/Cards'
 import Chat from '../../components/chat/Chat'
+import customAxios from '../../lib/customAxios'
+import { AuthContext } from '../../context/AuthContext'
 import './profile.scss'
 
 export default function Profile() {
+  const { updateUser, currentUser } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const handleLogout = async () => {
+    try {
+      await customAxios.post('/auth/logout')
+      updateUser(null)
+      navigate('/')
+    } 
+    catch (err) {
+      console.log(err)
+    }
+  }
+
   return (
     <div className="profilePage">
       <div className="details">
@@ -16,18 +33,15 @@ export default function Profile() {
           </div>
           <div className="info">
             <span>
-              Avatar:
-              <img
-                src="https://images.pexels.com/photos/91227/pexels-photo-91227.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2"
-                alt=""
-              />
+              Avatar: <img src={currentUser?.avatar} alt="" />
             </span>
             <span>
-              Username: <b>John Doe</b>
+              Username: <b>{currentUser?.username}</b>
             </span>
             <span>
-              E-mail: <b>john@gmail.com</b>
+              E-mail: <b>{currentUser?.email}</b>
             </span>
+            <button onClick={handleLogout}>Logout</button>
           </div>
           <div className="title">
             <h1>My List</h1>
