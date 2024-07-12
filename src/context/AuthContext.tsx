@@ -3,7 +3,7 @@ import { AuthUser } from '../types'
 
 interface IContext {
   currentUser: AuthUser | null
-  updateUser: (data: AuthUser) => void
+  updateUser: (data: AuthUser | null) => void
 }
 
 export const AuthContext = createContext({} as IContext)
@@ -11,7 +11,7 @@ export const AuthContext = createContext({} as IContext)
 export const AuthContextProvider = ({ children }: { children: React.ReactNode }) => {
   const [currentUser, setCurrentUser] = useState<AuthUser | null>(JSON.parse(localStorage.getItem('user') as string)) 
 
-  const updateUser = (data: AuthUser) => {
+  const updateUser = (data: AuthUser | null) => {
     setCurrentUser(data)
   }
 
