@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout from './components/layout/Layout'
+import { Layout, RequireAuth } from './components/layout/Layout'
 import Home from './pages/home/Home'
 import List from './pages/list/List'
 import Single from './pages/single/Single'
@@ -25,7 +25,21 @@ function App() {
         {
           path: '/:id',
           element: <Single />      
+        },        
+        {
+          path: '/login',
+          element: <Login />,
         },
+        {
+          path: '/register',
+          element: <Register />,
+        },        
+      ],
+    },
+    {
+      path: '/',
+      element: <RequireAuth />,
+      children: [
         {
           path:'/profile',
           element:<Profile/>
@@ -33,14 +47,6 @@ function App() {
         {
           path:'/profile/update',
           element:<ProfileUpdate/>
-        },
-        {
-          path: "/login",
-          element: <Login />,
-        },
-        {
-          path: "/register",
-          element: <Register />,
         }
       ]
     }
