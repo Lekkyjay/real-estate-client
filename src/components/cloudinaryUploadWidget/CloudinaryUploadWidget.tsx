@@ -8,13 +8,13 @@ declare global {
 
 interface IUploadWidget {
   uwConfig: any
-  setAvatar: React.Dispatch<React.SetStateAction<string[]>>
+  setUpload: React.Dispatch<React.SetStateAction<string[]>>
 }
 
 // Create a context to manage the script loading state
 const CloudinaryScriptContext = createContext<{ loaded: boolean }>({ loaded: false })
 
-function UploadWidget({ uwConfig, setAvatar }: IUploadWidget) {
+function UploadWidget({ uwConfig, setUpload }: IUploadWidget) {
   const [loaded, setLoaded] = useState(false)
 
   useEffect(() => {
@@ -43,7 +43,7 @@ function UploadWidget({ uwConfig, setAvatar }: IUploadWidget) {
         (error: any, result: any) => {
           if (!error && result && result.event === "success") {
             console.log("Done! Here is the image info: ", result.info)
-            setAvatar((prev) => [...prev, result.info.secure_url])
+            setUpload((prev) => [...prev, result.info.secure_url])
           }
         }
       )
