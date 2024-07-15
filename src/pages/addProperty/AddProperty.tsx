@@ -1,12 +1,59 @@
+import { ChangeEvent, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import ReactQuill from 'react-quill'
+import 'react-quill/dist/quill.snow.css'
 import './addProperty.scss'
+import customAxios from '../../lib/customAxios'
+import UploadWidget from '../../components/cloudinaryUploadWidget/CloudinaryUploadWidget'
 
 export default function AddProperty() {
+  const [desc, setDesc] = useState('')
+  const [images, setImages] = useState<string[]>([])
+  const [error, setError] = useState('')
+
+  const navigate = useNavigate()
+
+  const handleSubmit = async (e: ChangeEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const inputs = Object.fromEntries(formData)
+
+    try {
+      const res = await customAxios.post('/properties', {
+        title: inputs.title,
+        price: Number(inputs.price),
+        address: inputs.address,
+        city: inputs.city,
+        bedroom: Number(inputs.bedroom),
+        bathroom: Number(inputs.bathroom),
+        listing_type: inputs.type,
+        category: inputs.property,
+        latitude: inputs.latitude,
+        longitude: inputs.longitude,
+        images: images,
+        desc: desc,
+        utilities: inputs.utilities,
+        pet: inputs.pet,
+        income: inputs.income,
+        size: Number(inputs.size),
+        school: Number(inputs.school),
+        bus: Number(inputs.bus),
+        restaurant: Number(inputs.restaurant)
+      })
+      navigate('/'+res.data.data.id)
+    } 
+    catch (err: any) {
+      console.log(err)
+      setError(err.response.data.message)
+    }
+  }
+
   return (
     <div className="newPostPage">
       <div className="formContainer">
         <h1>Add New Post</h1>
         <div className="wrapper">
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="item">
               <label htmlFor="title">Title</label>
               <input id="title" name="title" type="text" />
@@ -21,6 +68,7 @@ export default function AddProperty() {
             </div>
             <div className="item description">
               <label htmlFor="desc">Description</label>
+              <ReactQuill theme="snow" onChange={setDesc} value={desc} />
             </div>
             <div className="item">
               <label htmlFor="city">City</label>
@@ -101,10 +149,24 @@ export default function AddProperty() {
               <input min={0} id="restaurant" name="restaurant" type="number" />
             </div>
             <button className="sendButton">Add</button>
+            {error && <span>error</span>}
           </form>
         </div>
       </div>
-      <div className="sideContainer"></div>
+      <div className="sideContainer">
+        {images.map((image, index) => (
+          <img src={image} key={index} alt="" />
+        ))}
+        <UploadWidget
+          uwConfig={{
+            multiple: true,
+            cloudName: "dtkdchtfm",
+            uploadPreset: "estate",
+            folder: "properties",
+          }}
+          setUpload={setImages}
+        />
+      </div>
     </div>
   )
 }

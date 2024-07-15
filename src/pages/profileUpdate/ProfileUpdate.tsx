@@ -69,7 +69,7 @@ export default function ProfileUpdate() {
             maxImageFileSize: 2000000,
             folder: "avatars"
           }}
-          setAvatar={setAvatar}
+          setUpload={setAvatar}
         />
       </div>
     </div>
