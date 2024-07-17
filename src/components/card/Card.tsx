@@ -1,16 +1,16 @@
 import { Link } from 'react-router-dom'
-import { Item } from '../../types'
+import { IProperty, Item } from '../../types'
 import './card.scss'
 
 interface IProps {
-  item: Item
+  item: IProperty
 }
 
 export default function Card({ item }: IProps) {
   return (
     <div className="card">
       <Link to={`/${item.id}`} className="imageContainer">
-        <img src={item.img} alt="" />
+        <img src={item.images[0]} alt="" />
       </Link>
       <div className="textContainer">
         <h2 className="title">

@@ -1,11 +1,11 @@
 import { MapContainer, TileLayer } from 'react-leaflet'
 import Pin from '../pin/Pin'
-import { Item } from '../../types'
+import { IProperty } from '../../types'
 import 'leaflet/dist/leaflet.css'
 import './map.scss'
 
 interface IProps {
-  items: Item[]
+  items: IProperty[]
 }
 
 export default function Map({ items }: IProps) {
@@ -15,7 +15,7 @@ export default function Map({ items }: IProps) {
         items.length === 1
           ? [items[0].latitude, items[0].longitude]
           : [52.4797, -1.90269]}
-      zoom={7}
+      zoom={6}
       scrollWheelZoom={false}
       className="map"
     >
