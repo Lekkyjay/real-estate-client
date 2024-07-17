@@ -1,12 +1,21 @@
-import { useContext } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Suspense, useContext } from 'react'
+import { Await, Link, useLoaderData, useNavigate } from 'react-router-dom'
 import Cards from '../../components/cards/Cards'
 import Chat from '../../components/chat/Chat'
 import customAxios from '../../lib/customAxios'
 import { AuthContext } from '../../context/AuthContext'
+import { IProperty } from '../../types'
 import './profile.scss'
 
+interface IProperties { 
+  properties: { 
+    userProperties: IProperty[], 
+    savedProperties: IProperty[] 
+  }
+}
+
 export default function Profile() {
+  const data = useLoaderData() as IProperties
   const { updateUser, currentUser } = useContext(AuthContext)
   const navigate = useNavigate()
 
@@ -49,11 +58,19 @@ export default function Profile() {
               <button>Create New Post</button>
             </Link>
           </div>
-          <Cards />
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await resolve={data.properties} errorElement={<p>Error loading posts!</p>}>
+              {(props) => <Cards properties={props.userProperties} />}
+            </Await>
+          </Suspense>
           <div className="title">
             <h1>Saved List</h1>
           </div>
-          <Cards />
+          <Suspense fallback={<p>Loading...</p>}>
+            <Await resolve={data.properties} errorElement={<p>Error loading posts!</p>}>
+              {(props) => <Cards properties={props.savedProperties} />}
+            </Await>
+          </Suspense>
         </div>
       </div>
       <div className="chatContainer">
