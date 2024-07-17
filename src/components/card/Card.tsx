@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { IProperty, Item } from '../../types'
+import { IProperty } from '../../types'
 import './card.scss'
 
 interface IProps {
