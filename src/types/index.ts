@@ -41,4 +41,5 @@ export interface IProperty {
   restaurant: number
   username: string
   avatar: string
+  isSaved: boolean
 }

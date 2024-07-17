@@ -1,13 +1,37 @@
-import { useLoaderData } from 'react-router-dom'
+import { useState, useContext } from 'react'
+import { useLoaderData, useNavigate } from 'react-router-dom'
 import DOMPurify from 'dompurify'
 import Map from '../../components/map/Map'
 import Slider from '../../components/slider/Slider'
 import { IProperty } from '../../types'
+import customAxios from '../../lib/customAxios'
+import { AuthContext } from '../../context/AuthContext'
 import './single.scss'
 
 export default function Single() {
   const data = useLoaderData() as IProperty
+  const [saved, setSaved] = useState(data.isSaved)
+  const { currentUser } = useContext(AuthContext)
+  const navigate = useNavigate()
+
+  const handleSave = async () => {
+    if (!currentUser) {
+      navigate('/login')
+    }
+    
+    setSaved((prev) => !prev)
+    
+    try {
+      await customAxios.post('/users/togglesave', { propertyId: data.id })
+    } 
+    catch (err) {
+      console.log(err)
+      setSaved((prev) => !prev)
+    }
+  }
+
   
+    
   return (
     <div className="singlePage">
       <div className="details">
@@ -34,7 +58,6 @@ export default function Single() {
                 __html: DOMPurify.sanitize(data.description)
               }}
             ></div>
-            {/* <div>{data.description}</div> */}
           </div>
         </div>
       </div>
@@ -124,7 +147,7 @@ export default function Single() {
           <div className="mapContainer">
             <Map items={[data]} />
           </div>
-          {/* <div className="buttons">
+          <div className="buttons">
             <button>
               <img src="/chat.png" alt="" />
               Send a Message
@@ -136,18 +159,7 @@ export default function Single() {
               <img src="/save.png" alt="" />
               {saved ? "Place Saved" : "Save the Place"}
             </button>
-          </div> */}
-          <div className="buttons">
-            <button>
-              <img src="/chat.png" alt="" />
-              Send a Message
-            </button>
-            <button>
-              <img src="/save.png" alt="" />
-              Save the Place
-            </button>
           </div>
-
         </div>
       </div>
     </div>
