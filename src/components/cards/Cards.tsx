@@ -1,11 +1,16 @@
-import { listData } from '../../lib/dummyData'
+import { IProperty } from '../../types'
 import Card from '../card/Card'
 import './cards.scss'
 
-export default function Cards() {
+interface IProps {
+  properties: IProperty[]
+}
+
+export default function Cards({ properties }: IProps) {
+  console.log('properties....:', properties)
   return (
     <div className='list'>
-      {listData.map(item=>(
+      {properties.map(item=>(
         <Card key={item.id} item={item}/>
       ))}
     </div>

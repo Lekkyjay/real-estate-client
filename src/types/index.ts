@@ -43,3 +43,8 @@ export interface IProperty {
   avatar: string
   isSaved: boolean
 }
+
+export interface IUserProperties {
+  userProperties: IProperty[]
+  savedProperties: IProperty[]
+}
