@@ -7,7 +7,7 @@ interface IProps {
 }
 
 export default function Cards({ properties }: IProps) {
-  console.log('properties....:', properties)
+  
   return (
     <div className='list'>
       {properties.map(item=>(
