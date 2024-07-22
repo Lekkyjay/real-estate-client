@@ -48,3 +48,23 @@ export interface IUserProperties {
   userProperties: IProperty[]
   savedProperties: IProperty[]
 }
+
+interface IMessage {
+  id: number
+  message: string
+  chatid: number
+  senderid: number
+  created_at: string
+}
+
+export interface IChat {
+  id: number
+  creatorid: number
+  receiverid: number
+  seenby: number[]
+  lastmessage: string
+  created_at: string
+  username: string
+  avatar: string
+  messages: IMessage[]
+}
