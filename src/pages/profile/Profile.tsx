@@ -4,14 +4,15 @@ import Cards from '../../components/cards/Cards'
 import Chat from '../../components/chat/Chat'
 import customAxios from '../../lib/customAxios'
 import { AuthContext } from '../../context/AuthContext'
-import { IProperty } from '../../types'
+import { IChat, IProperty } from '../../types'
 import './profile.scss'
 
 interface IProperties { 
   properties: { 
     userProperties: IProperty[], 
     savedProperties: IProperty[] 
-  }
+  },
+  chats: IChat[]
 }
 
 export default function Profile() {
@@ -75,7 +76,11 @@ export default function Profile() {
       </div>
       <div className="chatContainer">
         <div className="wrapper">
-          <Chat/>
+        <Suspense fallback={<p>Loading...</p>}>
+            <Await resolve={data.chats} errorElement={<p>Error loading chats!</p>}>
+              {(props) => <Chat chats={props}/>}
+            </Await>
+          </Suspense>
         </div>
       </div>
     </div>

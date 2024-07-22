@@ -19,13 +19,17 @@ export const listPageLoader: LoaderFunction = async ({ request }: LoaderFunction
 
 export const getUserProperties = async () => {
   const response = await customAxios('/users/properties')
-  // const chatPromise = await customAxios('/chats')
-  // console.log(response.data.data)
+  return response.data.data
+}
+
+export const getChats = async () => {
+  const response = await customAxios('/chats')
+  console.log(response.data.data)
   return response.data.data
 }
 
 export const profilePageLoader: LoaderFunction = async () => {
   const userPropertiesPromise = getUserProperties()
-  // const chatPromise = customAxios('/chats')
-  return defer({ properties: userPropertiesPromise })
+  const chatPromise = getChats()
+  return defer({ properties: userPropertiesPromise, chats: chatPromise })
 }
