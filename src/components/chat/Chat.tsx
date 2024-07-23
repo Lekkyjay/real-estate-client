@@ -4,6 +4,7 @@ import { AuthContext } from '../../context/AuthContext'
 import { SocketContext } from '../../context/SocketContext'
 import { IChat } from '../../types'
 import customAxios from '../../lib/customAxios'
+import { NotificationContext } from '../../context/notificationContext'
 import './chat.scss'
 
 interface IProps {
@@ -14,6 +15,7 @@ export default function Chat({ chats }: IProps) {
   const [chat, setChat] = useState<IChat | null>(null)
   const { currentUser } = useContext(AuthContext)
   const { socket } = useContext(SocketContext)
+  const { dispatch } = useContext(NotificationContext)
   const messageEndRef = useRef<HTMLDivElement>(null)
 
   console.log('global value of chat...:', chat)
@@ -24,12 +26,10 @@ export default function Chat({ chats }: IProps) {
   
   const handleOpenChat = async (id: number, username: string, avatar: string ) => {
     try {
-      // const res = await apiRequest("/chats/" + id)
-      // if (!res.data.seenBy.includes(currentUser.id)) {
-      //   decrease()
-      // }
-      // setChat({ ...res.data, receiver })
       const res = await customAxios('/chats/' + id)
+      if (!res.data.data.seenby.includes(currentUser?.id)) {
+        dispatch({ type: 'DECREASE' })
+      }
       setChat({ ...res.data.data, username, avatar })
     } 
     catch (err) {

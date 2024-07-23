@@ -1,11 +1,13 @@
 import { useContext, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
+import { NotificationContext } from '../../context/notificationContext'
 import './navbar.scss'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { currentUser } = useContext(AuthContext)
+  const { count } = useContext(NotificationContext) 
 
   return (
     <nav>
@@ -26,7 +28,7 @@ export default function Navbar() {
               <img src={currentUser.avatar} alt="" />
               <span>{currentUser.username}</span>
               <Link to="/profile" className="profile">
-                <div className="notification">3</div>
+                <div className="notification">{count}</div>
                 <span>Profile</span>
               </Link>
             </div>
