@@ -2,16 +2,6 @@ import { createContext, useContext, useEffect, useState } from 'react'
 import { io, Socket } from 'socket.io-client'
 import { AuthContext } from './AuthContext'
 
-// interface ISocket {
-//   _id?: string
-//   userId: string
-//   socketId: string
-// }
-
-// interface IContextold {
-//   socket: ISocket | null
-// }
-
 interface IContext {
   socket: Socket | null
 }
