@@ -66,5 +66,6 @@ export interface IChat {
   created_at: string
   username: string
   avatar: string
+  partnerid: number
   messages: IMessage[]
 }

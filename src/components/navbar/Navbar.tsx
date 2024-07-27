@@ -1,13 +1,20 @@
-import { useContext, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../../context/AuthContext'
-import { NotificationContext } from '../../context/notificationContext'
+import { useAppDispatch, useAppSelector } from '../../redux/store'
+import { getNotifications } from '../../redux/notificationSlice'
 import './navbar.scss'
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const { currentUser } = useContext(AuthContext)
-  const { count } = useContext(NotificationContext) 
+  const dispatch = useAppDispatch()
+  const { count } = useAppSelector(state => state.count)
+
+  useEffect(() => {
+    dispatch(getNotifications())  
+  }, [])
+  
 
   return (
     <nav>
@@ -28,7 +35,7 @@ export default function Navbar() {
               <img src={currentUser.avatar} alt="" />
               <span>{currentUser.username}</span>
               <Link to="/profile" className="profile">
-                <div className="notification">{count}</div>
+                {count > 0 && <div className="notification">{count}</div>}
                 <span>Profile</span>
               </Link>
             </div>

@@ -4,15 +4,16 @@ import App from './App.tsx'
 import './index.scss'
 import { AuthContextProvider } from './context/AuthContext.tsx'
 import { SocketContextProvider } from './context/SocketContext.tsx'
-import { NotificationContextProvider } from './context/notificationContext.tsx'
+import { Provider } from 'react-redux'
+import { store } from './redux/store.ts'
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <AuthContextProvider>
       <SocketContextProvider>
-        <NotificationContextProvider>
+        <Provider store={store}>
           <App />
-        </NotificationContextProvider>
+        </Provider>
       </SocketContextProvider>
     </AuthContextProvider>
   </React.StrictMode>,
