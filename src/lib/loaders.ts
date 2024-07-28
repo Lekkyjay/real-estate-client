@@ -24,7 +24,7 @@ export const getUserProperties = async () => {
 
 export const getChats = async () => {
   const response = await customAxios('/chats')
-  console.log(response.data.data)
+  // console.log(response.data.data)
   return response.data.data
 }
 

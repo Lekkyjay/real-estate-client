@@ -22,8 +22,8 @@ export default function Chat({ chats }: IProps) {
 
   const dispatch = useAppDispatch()
 
-  console.log('chats fetched with the profilePageLoader...:', chats)
-  console.log('current chat state...:', chat)
+  // console.log('chats fetched with the profilePageLoader...:', chats)
+  // console.log('current chat state...:', chat)
 
   useEffect(() => {
     messageEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -32,10 +32,10 @@ export default function Chat({ chats }: IProps) {
   const handleOpenChat = async (id: number, username: string, avatar: string, partnerid: number ) => {
     try {
       const res = await customAxios('/chats/' + id)
-      console.log('response from getChat...:', res.data.data)
-      console.log('seenby does not include currentUser.id...:', !res.data.data.seenby.includes(currentUser?.id))
-      console.log('seenby...:', res.data.data.seenby)
-      console.log('currentUser.id...:', currentUser?.id)
+      // console.log('response from getChat...:', res.data.data)
+      // console.log('seenby does not include currentUser.id...:', !res.data.data.seenby.includes(currentUser?.id))
+      // console.log('seenby...:', res.data.data.seenby)
+      // console.log('currentUser.id...:', currentUser?.id)
       if (!res.data.data.seenby.includes(currentUser?.id)) {
         dispatch(decrease())
       }
@@ -53,9 +53,9 @@ export default function Chat({ chats }: IProps) {
     if (!message) return
     try {
       const res = await customAxios.post(`/chats/${chat?.id}/msg`, { message })   //returns a message obj after saving it to db
-      console.log('response from create message controller....:', res.data.data)
+      // console.log('response from create message controller....:', res.data.data)
       setChat(prev => {
-        console.log('setChat prev state....:', prev)
+        // console.log('setChat prev state....:', prev)
         return { ...prev!, messages: [...prev!.messages, res.data.data]}
       })
       e.target.reset()
@@ -80,12 +80,12 @@ export default function Chat({ chats }: IProps) {
     }
 
     if (chat && socket) {
-      console.log('chat && socket ran')
+      // console.log('chat && socket ran')
       socket.on('gotMessage', (data) => {
-        console.log('gotten Message...:', data.data)
-        console.log('chat.id == data.data.chatid....:', chat.id == data.data.chatid)
-        console.log('chat.id...:', chat.id)
-        console.log('data.data.chatid....:', data.data.chatid)
+        // console.log('gotten Message...:', data.data)
+        // console.log('chat.id == data.data.chatid....:', chat.id == data.data.chatid)
+        // console.log('chat.id...:', chat.id)
+        // console.log('data.data.chatid....:', data.data.chatid)
         if (chat.id == data.data.chatid) {
           setChat((prev) => ({ ...prev!, messages: [...prev!.messages, data.data] }))
           read()

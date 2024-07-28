@@ -16,7 +16,7 @@ export const SocketContextProvider = ({ children }: { children: React.ReactNode 
   //a new socketId is generated anytime the browser is reloaded or when the app is rerendered(not sure about this one)  
   //this happens anytime i save changes to my code as the vite hot-reload causes my browser to reload
   useEffect(() => {
-    setSocket(io('http://localhost:8000'))
+    setSocket(io(import.meta.env.VITE_SOCKET_URL))
   }, [])
 
   //whenever a user signs in, a userId is associated with the socketId generated above

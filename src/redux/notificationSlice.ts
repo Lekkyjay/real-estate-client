@@ -12,13 +12,6 @@ export const getNotifications = createAsyncThunk<number, void, {}>('get/notifica
   }
 })
 
-// interface IState {
-//   number: number
-//   fetch: () => Promise<void>
-//   decrease: () => void
-//   reset: () => void
-// }
-
 interface InitialSate {
   count: number
 }
